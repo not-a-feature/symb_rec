@@ -44,7 +44,7 @@ class HASYDataset(Dataset):
 # Load data
 root_dir = "/home/jules/Dokumente/symb-rec/"
 data = pd.read_csv(os.path.join(root_dir, "hasy-data-labels.csv"))
-data = data[:1000]
+# data = data[:1000]
 
 symbols_df = pd.read_csv(os.path.join(root_dir, "symbols.csv"))
 
@@ -66,7 +66,7 @@ image_size = 24
 
 batch_size = 128
 log_interval = 100  # How often to display (batch) loss during training
-epochs = 2  # Number of epochs
+epochs = 20  # Number of epochs
 learningRate = 0.001  # learning rate
 learningMomentum = 0.9  # momentum of SGD
 
@@ -252,6 +252,8 @@ for epoch in range(epochs):
         log_interval=log_interval,
     )
     plot_loss(train_loss, val_loss, train_acc, val_acc, root_dir)
+    torch.save(model, os.path.join(root_dir, f"model-{epoch}"))
+
 
 torch.save(model, os.path.join(root_dir, "model"))
 
